@@ -1,8 +1,12 @@
-export const quizzes = {
+import { QuizzesArray } from "./quiz.types";
+
+const quizzes: QuizzesArray = {
   quizSet: [
     {
       quizName: "Test your basics",
       level: "Beginner",
+      coverImage:
+        "https://res.cloudinary.com/circler/image/upload/c_thumb,w_200,g_face/v1625496117/beginner-level_ecdspx.jpg",
       questions: [
         {
           question: "When should you begin saving your money?",
@@ -27,7 +31,6 @@ export const quizzes = {
             },
           ],
         },
-
         {
           question: "NIFTY consists of",
           points: 5,
@@ -136,6 +139,8 @@ export const quizzes = {
     {
       quizName: "Test your fundamentals",
       level: "Intermediate",
+      coverImage:
+        "https://res.cloudinary.com/circler/image/upload/c_thumb,w_200,g_face/v1625497622/intermediate_kaxnzk.jpg",
       questions: [
         {
           question: "The process of issuing share to the public is called as:",
@@ -273,6 +278,8 @@ export const quizzes = {
     {
       quizName: "All about investing",
       level: "Expert",
+      coverImage:
+        "https://res.cloudinary.com/circler/image/upload/c_thumb,w_200,g_face/v1625497974/expert-level_owjpcn.jpg",
       questions: [
         {
           question: "The Investments in Equities for long term perspective",
@@ -406,6 +413,8 @@ export const quizzes = {
     {
       quizName: "Financial planning",
       level: "Elite",
+      coverImage:
+        "https://res.cloudinary.com/circler/image/upload/c_thumb,w_200,g_face/v1625498054/elite-level_q4kaih.jpg",
       questions: [
         {
           question:
@@ -553,3 +562,5 @@ export const quizzes = {
     },
   ],
 };
+
+export { quizzes };
