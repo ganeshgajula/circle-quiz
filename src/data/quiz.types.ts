@@ -1,9 +1,11 @@
 export type Options = {
+  _id: number;
   text: string;
   isCorrect: boolean;
 };
 
 export type Questions = {
+  _id: number;
   question: string;
   points: number;
   negativePoints: number;
@@ -11,6 +13,7 @@ export type Questions = {
 };
 
 export type Quizzes = {
+  _id: number;
   quizName: string;
   level: string;
   coverImage: string;
