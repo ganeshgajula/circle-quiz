@@ -23,7 +23,7 @@ const quizzes: QuizzesArray = {
             },
             {
               text: "When you reach retirement",
-              isCorrect: true,
+              isCorrect: false,
             },
             {
               text: "When you are 30",
@@ -225,6 +225,10 @@ const quizzes: QuizzesArray = {
               text: "Dividend",
               isCorrect: true,
             },
+            {
+              text: "Interest",
+              isCorrect: false,
+            },
           ],
         },
         {
@@ -404,6 +408,10 @@ const quizzes: QuizzesArray = {
             },
             {
               text: "Investing all capital at once",
+              isCorrect: false,
+            },
+            {
+              text: "Buying all multibagger stocks",
               isCorrect: false,
             },
           ],
