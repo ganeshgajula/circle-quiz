@@ -1,6 +1,6 @@
 import { QuizzesArray } from "./quiz.types";
 
-const quizzes: QuizzesArray = {
+const quizzes = {
   quizSet: [
     {
       quizName: "Test your basics",
