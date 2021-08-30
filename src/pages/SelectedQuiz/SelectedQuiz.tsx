@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Navbar } from "../../components";
 import { useQuiz } from "../../context/QuizProvider";
@@ -11,7 +11,7 @@ export const SelectedQuiz = () => {
   } = useQuiz();
   const { quizId } = useParams();
 
-  const [correctOptionId, setCorrectOptionId] = useState<number | null>(null);
+  // const [correctOptionId, setCorrectOptionId] = useState<number | null>(null);
 
   const requestedQuiz = quizzes.find(
     (quiz: Quizzes) => String(quiz._id) === quizId
@@ -26,6 +26,10 @@ export const SelectedQuiz = () => {
     dispatch({ type: "RESET_QUIZ" });
   };
 
+  const correctOption = questionToDisplay?.options.find(
+    (option) => option.isCorrect
+  );
+
   // const incrementOrDecrementScore = (
   //   isCorrect: boolean,
   //   correctPoints: number,
@@ -36,9 +40,7 @@ export const SelectedQuiz = () => {
   //     : dispatch({ type: "DECREMENT_SCORE", payload: negativePoints });
   // };
 
-  const setSelectedOptionHandler = (optionId: number, isCorrect: boolean) => {
-    console.log(isCorrect);
-    isCorrect === true && setCorrectOptionId(optionId);
+  const setSelectedOptionHandler = (optionId: number) => {
     dispatch({
       type: "SET_SELECTED_OPTION",
       payload: optionId,
@@ -46,7 +48,7 @@ export const SelectedQuiz = () => {
   };
 
   const questionAndScoreHandler = () =>
-    selectedOptionId === correctOptionId
+    selectedOptionId === correctOption?._id
       ? dispatch({
           type: "INCREMENT_SCORE_AND_LOAD_NEXT_QUESTION",
           payload: questionToDisplay?.points,
@@ -57,7 +59,7 @@ export const SelectedQuiz = () => {
         });
 
   console.log(selectedOptionId);
-  console.log(correctOptionId);
+  console.log(correctOption?._id);
   console.log(requestedQuiz);
   return (
     <>
@@ -81,9 +83,7 @@ export const SelectedQuiz = () => {
                     ? "bg-green-400"
                     : "bg-red-500"
                 } text-white my-2 p-2 cursor-pointer`}
-                onClick={() =>
-                  setSelectedOptionHandler(option._id, option.isCorrect)
-                }
+                onClick={() => setSelectedOptionHandler(option._id)}
               >
                 {option.text}
               </li>

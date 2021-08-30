@@ -14,7 +14,12 @@ export const quizReducer = (state: QuizState, action: ActionType) => {
       return { ...state, quizzes: action.payload };
 
     case "RESET_QUIZ":
-      return { ...state, currentQuestionNo: 0, currentScore: 0 };
+      return {
+        ...state,
+        currentQuestionNo: 0,
+        currentScore: 0,
+        selectedOptionId: null,
+      };
 
     case "SET_SELECTED_OPTION":
       return { ...state, selectedOptionId: action.payload };
@@ -24,6 +29,7 @@ export const quizReducer = (state: QuizState, action: ActionType) => {
         ...state,
         currentScore: state.currentScore + action.payload,
         currentQuestionNo: state.currentQuestionNo + 1,
+        selectedOptionId: null,
       };
 
     case "DECREMENT_SCORE_AND_LOAD_NEXT_QUESTION":
@@ -31,6 +37,7 @@ export const quizReducer = (state: QuizState, action: ActionType) => {
         ...state,
         currentScore: state.currentScore - action.payload,
         currentQuestionNo: state.currentQuestionNo + 1,
+        selectedOptionId: null,
       };
 
     default:
