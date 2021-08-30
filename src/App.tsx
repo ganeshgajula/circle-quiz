@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import { Home, SelectedQuiz } from "./pages";
+import { Home, ReviewSelection, SelectedQuiz } from "./pages";
 
 function App() {
   return (
@@ -9,6 +9,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/quiz/:quizId" element={<SelectedQuiz />} />
+        <Route path="/review" element={<ReviewSelection />} />
       </Routes>
     </div>
   );

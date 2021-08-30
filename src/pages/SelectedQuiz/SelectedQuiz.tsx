@@ -19,11 +19,6 @@ export const SelectedQuiz = () => {
 
   const questionToDisplay = requestedQuiz?.questions[currentQuestionNo];
 
-  const resetQuizHandler = () => {
-    navigate("/review");
-    dispatch({ type: "RESET_QUIZ" });
-  };
-
   const correctOption = questionToDisplay?.options.find(
     (option) => option.isCorrect
   );
@@ -87,7 +82,7 @@ export const SelectedQuiz = () => {
           onClick={() => {
             currentQuestionNo < 5
               ? questionAndScoreHandler()
-              : resetQuizHandler();
+              : navigate("/review");
           }}
           disabled={!selectedOptionId}
         >
