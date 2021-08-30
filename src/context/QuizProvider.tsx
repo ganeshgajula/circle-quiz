@@ -6,10 +6,14 @@ import { Quizzes } from "../data/quiz.types";
 
 export type QuizState = {
   quizzes: Quizzes[] | [];
+  currentQuestionNo: number;
+  currentScore: number;
 };
 
 const initialState: QuizState = {
   quizzes: [],
+  currentQuestionNo: 0,
+  currentScore: 0,
 };
 
 type LoadData = {
@@ -17,7 +21,11 @@ type LoadData = {
   quizzes: Quizzes[];
 };
 
-export const QuizContext = createContext({ quizzes: initialState.quizzes });
+export const QuizContext = createContext({
+  quizzes: initialState.quizzes,
+  currentQuestionNo: initialState.currentQuestionNo,
+  currentScore: initialState.currentScore,
+});
 
 export const QuizProvider: React.FC = ({ children }) => {
   const [quizArray, setQuizArray] = useState<Quizzes[] | []>([]);
@@ -32,7 +40,13 @@ export const QuizProvider: React.FC = ({ children }) => {
   }, []);
 
   return (
-    <QuizContext.Provider value={{ quizzes: quizArray }}>
+    <QuizContext.Provider
+      value={{
+        quizzes: quizArray,
+        currentQuestionNo: initialState.currentQuestionNo,
+        currentScore: initialState.currentScore,
+      }}
+    >
       {children}
     </QuizContext.Provider>
   );
