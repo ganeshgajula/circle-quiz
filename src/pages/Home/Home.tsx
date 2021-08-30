@@ -3,11 +3,19 @@ import { Navbar } from "../../components";
 import { useQuiz } from "../../context/QuizProvider";
 import { Quizzes } from "../../data/quiz.types";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 const Home = () => {
   const {
-    data: { quizzes },
+    data: { quizzes, currentQuestionNo },
+    dispatch,
   } = useQuiz();
+
+  useEffect(() => {
+    if (currentQuestionNo !== 0) {
+      dispatch({ type: "RESET_QUIZ" });
+    }
+  }, [currentQuestionNo, dispatch]);
 
   console.log(quizzes);
   return (
