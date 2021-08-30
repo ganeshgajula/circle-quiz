@@ -5,7 +5,9 @@ import { Quizzes } from "../../data/quiz.types";
 import { Link } from "react-router-dom";
 
 const Home = () => {
-  const { quizzes } = useQuiz();
+  const {
+    data: { quizzes },
+  } = useQuiz();
 
   console.log(quizzes);
   return (
@@ -18,7 +20,7 @@ const Home = () => {
             key={quiz.quizName}
             className="p-4 flex flex-col items-center border-2 cursor-pointer"
           >
-            <img src={quiz.coverImage} alt="cover" className="w-80" />
+            <img src={quiz.coverImage} alt="cover" className="w-80 h-52" />
             <p className="p-2">{quiz.quizName}</p>
             <p>{quiz.level}</p>
           </Link>

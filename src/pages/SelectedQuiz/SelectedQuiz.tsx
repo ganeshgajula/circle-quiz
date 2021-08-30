@@ -5,7 +5,10 @@ import { useQuiz } from "../../context/QuizProvider";
 import { Options, Quizzes } from "../../data/quiz.types";
 
 export const SelectedQuiz = () => {
-  const { quizzes, currentQuestionNo, currentScore } = useQuiz();
+  const {
+    data: { quizzes, currentQuestionNo, currentScore },
+    dispatch,
+  } = useQuiz();
   const { quizId } = useParams();
 
   const requestedQuiz = quizzes.find(
@@ -34,7 +37,12 @@ export const SelectedQuiz = () => {
             ))}
           </ul>
         </div>
-        <button className="border-2 px-4 py-2 bg-blue-300">Next</button>
+        <button
+          className="border-2 px-4 py-2 bg-blue-300"
+          onClick={() => dispatch({ type: "LOAD_NEXT_QUESTION" })}
+        >
+          Next
+        </button>
       </div>
     </>
   );
