@@ -11,8 +11,6 @@ export const SelectedQuiz = () => {
   } = useQuiz();
   const { quizId } = useParams();
 
-  // const [correctOptionId, setCorrectOptionId] = useState<number | null>(null);
-
   const requestedQuiz = quizzes.find(
     (quiz: Quizzes) => String(quiz._id) === quizId
   );
@@ -29,16 +27,6 @@ export const SelectedQuiz = () => {
   const correctOption = questionToDisplay?.options.find(
     (option) => option.isCorrect
   );
-
-  // const incrementOrDecrementScore = (
-  //   isCorrect: boolean,
-  //   correctPoints: number,
-  //   negativePoints: number
-  // ) => {
-  //   isCorrect
-  //     ? dispatch({ type: "INCREMENT_SCORE", payload: correctPoints })
-  //     : dispatch({ type: "DECREMENT_SCORE", payload: negativePoints });
-  // };
 
   const setSelectedOptionHandler = (optionId: number) => {
     dispatch({
@@ -79,9 +67,13 @@ export const SelectedQuiz = () => {
               <li
                 key={option._id}
                 className={`${
-                  selectedOptionId === option._id
-                    ? "bg-green-400"
-                    : "bg-red-500"
+                  selectedOptionId && option.isCorrect && "bg-green-400"
+                } ${
+                  !option.isCorrect &&
+                  option._id === selectedOptionId &&
+                  "bg-red-500"
+                } ${
+                  selectedOptionId && "pointer-events-none"
                 } text-white my-2 p-2 cursor-pointer`}
                 onClick={() => setSelectedOptionHandler(option._id)}
               >
