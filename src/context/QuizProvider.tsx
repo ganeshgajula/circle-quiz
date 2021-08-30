@@ -9,12 +9,14 @@ export type QuizState = {
   quizzes: Quizzes[] | [];
   currentQuestionNo: number;
   currentScore: number;
+  selectedOptionId: number | null;
 };
 
 const initialState: QuizState = {
   quizzes: [],
   currentQuestionNo: 0,
   currentScore: 0,
+  selectedOptionId: null,
 };
 
 type LoadData = {
