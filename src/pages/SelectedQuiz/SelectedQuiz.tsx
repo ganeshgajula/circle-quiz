@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Navbar } from "../../components";
@@ -11,7 +12,6 @@ export const SelectedQuiz = () => {
       quizzes,
       currentQuestionNo,
       currentScore,
-      selectedOptionId,
       selectedQuiz,
       playedQuizzes,
     },
@@ -32,14 +32,17 @@ export const SelectedQuiz = () => {
     (option) => option.isCorrect
   );
 
-  const setSelectedOptionHandler = (optionId: string) => {
-    dispatch({
-      type: "SET_SELECTED_OPTION",
-      payload: optionId,
-    });
-  };
+  // const setSelectedOptionHandler = (optionId: string) => {
+  //   dispatch({
+  //     type: "SET_SELECTED_OPTION",
+  //     payload: optionId,
+  //   });
+  // };
 
-  const questionAndScoreHandler = () =>
+  const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
+
+  const questionAndScoreHandler = () => {
+    setSelectedOptionId(null);
     selectedOptionId === correctOption?._id
       ? dispatch({
           type: "INCREMENT_SCORE_AND_LOAD_NEXT_QUESTION",
@@ -55,6 +58,7 @@ export const SelectedQuiz = () => {
             noOfQuestions: requestedQuiz?.questions.length,
           },
         });
+  };
 
   const finishQuizHandler = () => {
     questionAndScoreHandler();
@@ -94,7 +98,7 @@ export const SelectedQuiz = () => {
                   } ${
                     selectedOptionId && "pointer-events-none"
                   } text-white my-2 p-2 cursor-pointer`}
-                  onClick={() => setSelectedOptionHandler(option._id)}
+                  onClick={() => setSelectedOptionId(option._id)}
                 >
                   {option.text}
                 </li>

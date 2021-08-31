@@ -37,14 +37,10 @@ export const quizReducer = (state: QuizState, action: ActionType) => {
         ...state,
         currentQuestionNo: 0,
         currentScore: 0,
-        selectedOptionId: null,
       };
 
     case "SET_SELECTED_QUIZ":
       return { ...state, selectedQuiz: action.payload };
-
-    case "SET_SELECTED_OPTION":
-      return { ...state, selectedOptionId: action.payload };
 
     case "INCREMENT_SCORE_AND_LOAD_NEXT_QUESTION":
       return {
@@ -54,7 +50,6 @@ export const quizReducer = (state: QuizState, action: ActionType) => {
           state.currentQuestionNo < action.payload.noOfQuestions - 1
             ? state.currentQuestionNo + 1
             : state.currentQuestionNo,
-        selectedOptionId: null,
       };
 
     case "DECREMENT_SCORE_AND_LOAD_NEXT_QUESTION":
@@ -65,7 +60,6 @@ export const quizReducer = (state: QuizState, action: ActionType) => {
           state.currentQuestionNo < action.payload.noOfQuestions - 1
             ? state.currentQuestionNo + 1
             : state.currentQuestionNo,
-        selectedOptionId: null,
       };
 
     case "ADD_TO_PLAYED_QUIZZES":
