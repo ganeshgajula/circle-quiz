@@ -5,12 +5,19 @@ import { createContext, useContext } from "react";
 import { Quizzes } from "../data/quiz.types";
 import { quizReducer } from "../reducer/quizReducer";
 
+export type PlayedQuizAndScore = {
+  quizId: string;
+  score: number;
+};
+
 export type QuizState = {
   quizzes: Quizzes[] | [];
   currentQuestionNo: number;
   currentScore: number;
   selectedOptionId: string | null;
   selectedQuiz: Quizzes | null;
+  playedQuizzes: Quizzes[] | [];
+  playedQuizScores: PlayedQuizAndScore[];
 };
 
 const initialState: QuizState = {
@@ -19,6 +26,8 @@ const initialState: QuizState = {
   currentScore: 0,
   selectedOptionId: null,
   selectedQuiz: null,
+  playedQuizzes: [],
+  playedQuizScores: [],
 };
 
 type LoadData = {

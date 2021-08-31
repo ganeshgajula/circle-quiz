@@ -13,6 +13,7 @@ export const SelectedQuiz = () => {
       currentScore,
       selectedOptionId,
       selectedQuiz,
+      playedQuizzes,
     },
     dispatch,
   } = useQuiz();
@@ -57,6 +58,7 @@ export const SelectedQuiz = () => {
 
   const finishQuizHandler = () => {
     questionAndScoreHandler();
+    dispatch({ type: "ADD_TO_PLAYED_QUIZZES", payload: requestedQuiz });
     navigate("/review");
   };
 
@@ -64,6 +66,7 @@ export const SelectedQuiz = () => {
   console.log(correctOption?._id);
   console.log(requestedQuiz);
   console.log(selectedQuiz);
+  console.log(playedQuizzes);
   return (
     <>
       <Navbar />
