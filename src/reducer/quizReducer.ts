@@ -22,7 +22,7 @@ export type ActionType =
       payload: PointsAndQuestions;
     }
   | { type: "SET_SELECTED_QUIZ"; payload: Quizzes }
-  | { type: "SET_SELECTED_OPTION"; payload: string }
+  | { type: "SET_SELECTED_OPTIONS"; payload: string }
   | { type: "ADD_TO_PLAYED_QUIZZES"; payload: Quizzes }
   | { type: "SAVE_SCORE_AND_QUIZ_DATA"; payload: QuizIdAndScore }
   | { type: "RESET_QUIZ" };
@@ -37,6 +37,8 @@ export const quizReducer = (state: QuizState, action: ActionType) => {
         ...state,
         currentQuestionNo: 0,
         currentScore: 0,
+        selectedQuiz: null,
+        selectedOptions: [],
       };
 
     case "SET_SELECTED_QUIZ":
@@ -75,6 +77,12 @@ export const quizReducer = (state: QuizState, action: ActionType) => {
           ...state.playedQuizScores,
           { quizId: action.payload.quizId, score: action.payload.score },
         ],
+      };
+
+    case "SET_SELECTED_OPTIONS":
+      return {
+        ...state,
+        selectedOptions: [...state.selectedOptions, action.payload],
       };
 
     default:

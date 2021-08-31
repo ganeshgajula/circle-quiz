@@ -32,13 +32,6 @@ export const SelectedQuiz = () => {
     (option) => option.isCorrect
   );
 
-  // const setSelectedOptionHandler = (optionId: string) => {
-  //   dispatch({
-  //     type: "SET_SELECTED_OPTION",
-  //     payload: optionId,
-  //   });
-  // };
-
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
 
   const questionAndScoreHandler = () => {
@@ -98,7 +91,13 @@ export const SelectedQuiz = () => {
                   } ${
                     selectedOptionId && "pointer-events-none"
                   } text-white my-2 p-2 cursor-pointer`}
-                  onClick={() => setSelectedOptionId(option._id)}
+                  onClick={() => {
+                    setSelectedOptionId(option._id);
+                    dispatch({
+                      type: "SET_SELECTED_OPTIONS",
+                      payload: option._id,
+                    });
+                  }}
                 >
                   {option.text}
                 </li>

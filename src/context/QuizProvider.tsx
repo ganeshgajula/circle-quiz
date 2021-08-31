@@ -17,6 +17,7 @@ export type QuizState = {
   selectedQuiz: Quizzes | null;
   playedQuizzes: Quizzes[] | [];
   playedQuizScores: PlayedQuizAndScore[];
+  selectedOptions: string[];
 };
 
 const initialState: QuizState = {
@@ -26,6 +27,7 @@ const initialState: QuizState = {
   selectedQuiz: null,
   playedQuizzes: [],
   playedQuizScores: [],
+  selectedOptions: [],
 };
 
 type LoadData = {
