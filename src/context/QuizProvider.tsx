@@ -9,7 +9,8 @@ export type QuizState = {
   quizzes: Quizzes[] | [];
   currentQuestionNo: number;
   currentScore: number;
-  selectedOptionId: number | null;
+  selectedOptionId: string | null;
+  selectedQuiz: Quizzes | null;
 };
 
 const initialState: QuizState = {
@@ -17,6 +18,7 @@ const initialState: QuizState = {
   currentQuestionNo: 0,
   currentScore: 0,
   selectedOptionId: null,
+  selectedQuiz: null,
 };
 
 type LoadData = {
