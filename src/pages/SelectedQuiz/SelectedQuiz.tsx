@@ -56,7 +56,7 @@ export const SelectedQuiz = () => {
   const finishQuizHandler = () => {
     questionAndScoreHandler();
     dispatch({ type: "ADD_TO_PLAYED_QUIZZES", payload: requestedQuiz });
-    navigate("/review");
+    navigate("/review", { replace: true });
   };
 
   console.log(selectedOptionId);
