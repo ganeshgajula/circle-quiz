@@ -1,0 +1,1 @@
+export { PlayedQuizzes } from "./PlayedQuizzes";

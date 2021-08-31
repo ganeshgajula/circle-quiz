@@ -9,8 +9,11 @@ const Navbar = () => {
         <Link to="/">
           <img src={logo} alt="brand-logo" className="h-14 w-44" />
         </Link>
-        <Link to="/" className="pl-8 font-semibold">
+        <Link to="/" className="ml-8 font-semibold">
           All Quizzes
+        </Link>
+        <Link to="/playedquizzes" className="ml-4 font-semibold">
+          Played Quizzes
         </Link>
       </div>
       <button className="font-semibold px-5 py-2 bg-blue-500 text-white text-xl hover:bg-blue-700">
