@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Navbar } from "../../components";
+import { useAuth } from "../../context/AuthProvider";
 
 export type LoginData = {
   success: boolean;
@@ -15,6 +16,7 @@ export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { authDispatch } = useAuth();
 
   const allFieldsEntered = email && password;
 
@@ -39,6 +41,14 @@ export const Login = () => {
           username: data.firstName,
         })
       );
+      authDispatch({
+        type: "SET_USER_CREDENTIALS",
+        payload: {
+          loginStatus: true,
+          userId: data.userId,
+          username: data.firstName,
+        },
+      });
       navigate("/");
     }
 
