@@ -10,10 +10,10 @@ export type AuthState = {
   userName: string;
 };
 
-const { isUserLoggedIn } = JSON.parse(localStorage?.getItem("userInfo")!);
+const userLoginStatus = JSON.parse(localStorage?.getItem("userInfo")!);
 
 const initialState: AuthState = {
-  isUserLoggedIn,
+  isUserLoggedIn: userLoginStatus?.isUserLoggedIn,
   userId: "",
   userName: "",
 };
