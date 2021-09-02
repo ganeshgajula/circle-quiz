@@ -10,8 +10,10 @@ export type AuthState = {
   userName: string;
 };
 
+const { isUserLoggedIn } = JSON.parse(localStorage?.getItem("userInfo")!);
+
 const initialState: AuthState = {
-  isUserLoggedIn: false,
+  isUserLoggedIn,
   userId: "",
   userName: "",
 };
@@ -33,6 +35,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     const loginStatus: AuthState = JSON.parse(
       localStorage?.getItem("userInfo")!
     );
+
     if (loginStatus) {
       dispatch({
         type: "SET_USER_CREDENTIALS_FROM_LOCAL_STORAGE",

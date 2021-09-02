@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Navbar } from "../../components";
 import { useAuth } from "../../context/AuthProvider";
@@ -12,11 +12,17 @@ export type LoginData = {
   message?: string;
 };
 
+type LocationState = {
+  from: string;
+};
+
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { authDispatch } = useAuth();
+  const location = useLocation();
+  const state = location.state as LocationState;
 
   const allFieldsEntered = email && password;
 
@@ -49,7 +55,7 @@ export const Login = () => {
           username: data.firstName,
         },
       });
-      navigate("/");
+      navigate(state?.from ? state.from : "/");
     }
 
     if ("message" in data) {
