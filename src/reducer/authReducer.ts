@@ -3,7 +3,7 @@ import { AuthState } from "../context/AuthProvider";
 export type UserData = {
   loginStatus: boolean;
   userId: string;
-  username: string;
+  userName: string;
 };
 
 export type AuthActionType =
@@ -21,7 +21,7 @@ export const authReducer = (state: AuthState, action: AuthActionType) => {
         ...state,
         isUserLoggedIn: action.payload.loginStatus,
         userId: state.userId,
-        username: action.payload.username,
+        userName: action.payload.userName,
       };
 
     case "SET_USER_CREDENTIALS_FROM_LOCAL_STORAGE":
@@ -29,7 +29,7 @@ export const authReducer = (state: AuthState, action: AuthActionType) => {
         ...state,
         isUserLoggedIn: action.payload.loginStatus,
         userId: action.payload.userId,
-        username: action.payload.username,
+        userName: action.payload.userName,
       };
 
     case "LOGOUT_USER":
@@ -37,7 +37,7 @@ export const authReducer = (state: AuthState, action: AuthActionType) => {
         ...state,
         isUserLoggedIn: false,
         userId: "",
-        username: "",
+        userName: "",
       };
 
     default:

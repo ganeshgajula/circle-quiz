@@ -44,7 +44,7 @@ export const Login = () => {
         JSON.stringify({
           isUserLoggedIn: true,
           userId: data.userId,
-          username: data.firstName,
+          userName: data.firstName,
         })
       );
       authDispatch({
@@ -52,7 +52,7 @@ export const Login = () => {
         payload: {
           loginStatus: true,
           userId: data.userId,
-          username: data.firstName,
+          userName: data.firstName,
         },
       });
       navigate(state?.from ? state.from : "/");

@@ -42,7 +42,7 @@ export const AuthProvider: React.FC = ({ children }) => {
         payload: {
           loginStatus: loginStatus.isUserLoggedIn,
           userId: loginStatus.userId,
-          username: loginStatus.userName,
+          userName: loginStatus.userName,
         },
       });
     }
