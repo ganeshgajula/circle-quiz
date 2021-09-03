@@ -1,34 +1,46 @@
+import axios from "axios";
 import React from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "../../components";
+import { useAuth, UserData } from "../../context/AuthProvider";
 import { useQuiz } from "../../context/QuizProvider";
-import { PlayedQuizAndScore } from "../../context/QuizProvider";
 import { Options, Questions } from "../../data/quiz.types";
+
+export type AppendPlayedQuizzes = {
+  success: boolean;
+  updatedUser: UserData;
+};
 
 export const ReviewSelection = () => {
   const navigate = useNavigate();
 
   const {
-    data: { currentScore, selectedQuiz, playedQuizScores, selectedOptions },
+    data: { currentScore, selectedQuiz, selectedOptions },
     dispatch,
   } = useQuiz();
 
-  const isQuizAlreadyPlayed = playedQuizScores.find(
-    (quiz: PlayedQuizAndScore) => quiz.quizId === selectedQuiz?._id
-  );
+  const {
+    authData: { userId },
+    authDispatch,
+  } = useAuth();
 
   useEffect(() => {
-    if (!isQuizAlreadyPlayed) {
-      dispatch({
-        type: "SAVE_SCORE_AND_QUIZ_DATA",
-        payload: { quizId: selectedQuiz?._id, score: currentScore },
-      });
-    }
-  }, [isQuizAlreadyPlayed, currentScore, selectedQuiz?._id, dispatch]);
+    (async () => {
+      const { data, status } = await axios.post<AppendPlayedQuizzes>(
+        `http://localhost:4000/users/${userId}/playedquizzes`,
+        { quizId: selectedQuiz?._id, score: currentScore }
+      );
 
-  console.log(selectedOptions);
-  console.log(playedQuizScores);
+      if (status === 201) {
+        authDispatch({
+          type: "SAVE_PLAYED_QUIZ_DATA",
+          payload: data.updatedUser,
+        });
+      }
+    })();
+  }, [userId, currentScore, selectedQuiz?._id, authDispatch]);
+
   return (
     <>
       <Navbar />

@@ -8,6 +8,33 @@ export type AuthState = {
   isUserLoggedIn: boolean;
   userId: string;
   userName: string;
+  user: UserData | null;
+};
+
+export type QuizData = {
+  _id: string;
+  quizName: string;
+  level: string;
+  coverImage: string;
+};
+
+export type QuizAndScoreData = {
+  _id: string;
+  score: number;
+  quizId: QuizData;
+};
+
+export type UserData = {
+  _id: string;
+  firstname: string;
+  lastname: string;
+  email: string;
+  quizzesPlayed: QuizAndScoreData[];
+};
+
+export type InitializeUserData = {
+  success: boolean;
+  user: UserData;
 };
 
 const userLoginStatus = JSON.parse(localStorage?.getItem("userInfo")!);
@@ -16,6 +43,7 @@ const initialState: AuthState = {
   isUserLoggedIn: userLoginStatus?.isUserLoggedIn,
   userId: "",
   userName: "",
+  user: null,
 };
 
 export type AuthContextType = {

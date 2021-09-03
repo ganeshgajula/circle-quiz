@@ -6,11 +6,6 @@ type PointsAndQuestions = {
   noOfQuestions: number;
 };
 
-type QuizIdAndScore = {
-  quizId: string;
-  score: number;
-};
-
 export type ActionType =
   | { type: "LOAD_QUIZZES"; payload: Quizzes[] }
   | {
@@ -23,8 +18,6 @@ export type ActionType =
     }
   | { type: "SET_SELECTED_QUIZ"; payload: Quizzes }
   | { type: "SET_SELECTED_OPTIONS"; payload: string }
-  | { type: "ADD_TO_PLAYED_QUIZZES"; payload: Quizzes }
-  | { type: "SAVE_SCORE_AND_QUIZ_DATA"; payload: QuizIdAndScore }
   | { type: "RESET_QUIZ" };
 
 export const quizReducer = (state: QuizState, action: ActionType) => {
@@ -62,21 +55,6 @@ export const quizReducer = (state: QuizState, action: ActionType) => {
           state.currentQuestionNo < action.payload.noOfQuestions - 1
             ? state.currentQuestionNo + 1
             : state.currentQuestionNo,
-      };
-
-    case "ADD_TO_PLAYED_QUIZZES":
-      return {
-        ...state,
-        playedQuizzes: [...state.playedQuizzes, action.payload],
-      };
-
-    case "SAVE_SCORE_AND_QUIZ_DATA":
-      return {
-        ...state,
-        playedQuizScores: [
-          ...state.playedQuizScores,
-          { quizId: action.payload.quizId, score: action.payload.score },
-        ],
       };
 
     case "SET_SELECTED_OPTIONS":

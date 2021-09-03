@@ -8,13 +8,7 @@ import { Options, Quizzes } from "../../data/quiz.types";
 
 export const SelectedQuiz = () => {
   const {
-    data: {
-      quizzes,
-      currentQuestionNo,
-      currentScore,
-      selectedQuiz,
-      playedQuizzes,
-    },
+    data: { quizzes, currentQuestionNo, currentScore, selectedQuiz },
     dispatch,
   } = useQuiz();
   const { quizId } = useParams();
@@ -55,7 +49,6 @@ export const SelectedQuiz = () => {
 
   const finishQuizHandler = () => {
     questionAndScoreHandler();
-    dispatch({ type: "ADD_TO_PLAYED_QUIZZES", payload: requestedQuiz });
     navigate("/review", { replace: true });
   };
 
@@ -63,7 +56,7 @@ export const SelectedQuiz = () => {
   console.log(correctOption?._id);
   console.log(requestedQuiz);
   console.log(selectedQuiz);
-  console.log(playedQuizzes);
+
   return (
     <>
       <Navbar />

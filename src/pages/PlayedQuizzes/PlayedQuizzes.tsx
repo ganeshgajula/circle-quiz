@@ -1,22 +1,23 @@
 import React from "react";
 import { Navbar } from "../../components";
-import { useQuiz } from "../../context/QuizProvider";
-import { Quizzes } from "../../data/quiz.types";
+import { QuizAndScoreData, useAuth } from "../../context/AuthProvider";
 
 export const PlayedQuizzes = () => {
   const {
-    data: { playedQuizzes },
-  } = useQuiz();
+    authData: { user },
+  } = useAuth();
 
   return (
     <>
       <Navbar />
+      <h2>Inside played quizzes</h2>
       <div className="flex justify-between max-w-xl mx-auto">
-        {playedQuizzes.map((quiz: Quizzes) => (
+        {user?.quizzesPlayed.map((quiz: QuizAndScoreData) => (
           <div key={quiz._id} className="flex flex-col items-center my-4">
-            <img src={quiz.coverImage} alt="" />
-            <p>{quiz.quizName}</p>
-            <p>{quiz.level}</p>
+            <img src={quiz.quizId.coverImage} alt="" />
+            <p>{quiz.quizId.quizName}</p>
+            <p>{quiz.quizId.level}</p>
+            <p>{quiz.score}</p>
           </div>
         ))}
       </div>

@@ -1,6 +1,6 @@
-import { AuthState } from "../context/AuthProvider";
+import { AuthState, UserData } from "../context/AuthProvider";
 
-export type UserData = {
+export type UserCredentails = {
   loginStatus: boolean;
   userId: string;
   userName: string;
@@ -9,9 +9,14 @@ export type UserData = {
 export type AuthActionType =
   | {
       type: "SET_USER_CREDENTIALS";
-      payload: UserData;
+      payload: UserCredentails;
     }
-  | { type: "SET_USER_CREDENTIALS_FROM_LOCAL_STORAGE"; payload: UserData }
+  | {
+      type: "SET_USER_CREDENTIALS_FROM_LOCAL_STORAGE";
+      payload: UserCredentails;
+    }
+  | { type: "INITIALIZE_USER"; payload: UserData }
+  | { type: "SAVE_PLAYED_QUIZ_DATA"; payload: UserData }
   | { type: "LOGOUT_USER" };
 
 export const authReducer = (state: AuthState, action: AuthActionType) => {
@@ -20,7 +25,7 @@ export const authReducer = (state: AuthState, action: AuthActionType) => {
       return {
         ...state,
         isUserLoggedIn: action.payload.loginStatus,
-        userId: state.userId,
+        userId: action.payload.userId,
         userName: action.payload.userName,
       };
 
@@ -32,12 +37,25 @@ export const authReducer = (state: AuthState, action: AuthActionType) => {
         userName: action.payload.userName,
       };
 
+    case "INITIALIZE_USER":
+      return {
+        ...state,
+        user: action.payload,
+      };
+
+    case "SAVE_PLAYED_QUIZ_DATA":
+      return {
+        ...state,
+        user: action.payload,
+      };
+
     case "LOGOUT_USER":
       return {
         ...state,
         isUserLoggedIn: false,
         userId: "",
         userName: "",
+        userData: null,
       };
 
     default:
