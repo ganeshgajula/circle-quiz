@@ -7,6 +7,7 @@ import { PrivateRoute } from "./components";
 
 import {
   Home,
+  LeaderBoard,
   Login,
   PlayedQuizzes,
   ReviewSelection,
@@ -44,6 +45,7 @@ function App() {
         <PrivateRoute path="/quiz/:quizId" element={<SelectedQuiz />} />
         <PrivateRoute path="/review" element={<ReviewSelection />} />
         <PrivateRoute path="/playedquizzes" element={<PlayedQuizzes />} />
+        <PrivateRoute path="/leaderboard" element={<LeaderBoard />} />
       </Routes>
     </div>
   );

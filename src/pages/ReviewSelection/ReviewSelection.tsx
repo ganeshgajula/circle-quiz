@@ -4,12 +4,21 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "../../components";
 import { useAuth, UserData } from "../../context/AuthProvider";
+import {
+  useLeaderBoard,
+  UserAndQuizScore,
+} from "../../context/LeaderBoardProvider";
 import { useQuiz } from "../../context/QuizProvider";
 import { Options, Questions } from "../../data/quiz.types";
 
 export type AppendPlayedQuizzes = {
   success: boolean;
   updatedUser: UserData;
+};
+
+export type AddScoreToLeaderBoard = {
+  success: boolean;
+  leaderBoard: UserAndQuizScore;
 };
 
 export const ReviewSelection = () => {
@@ -24,6 +33,8 @@ export const ReviewSelection = () => {
     authData: { userId },
     authDispatch,
   } = useAuth();
+
+  const { leaderBoardDispatch } = useLeaderBoard();
 
   useEffect(() => {
     (async () => {
@@ -40,6 +51,22 @@ export const ReviewSelection = () => {
       }
     })();
   }, [userId, currentScore, selectedQuiz?._id, authDispatch]);
+
+  useEffect(() => {
+    (async () => {
+      const { data, status } = await axios.post<AddScoreToLeaderBoard>(
+        `http://localhost:4000/leaderboard/${userId}`,
+        { quizId: selectedQuiz?._id, score: currentScore }
+      );
+
+      if (status === 201) {
+        leaderBoardDispatch({
+          type: "ADD_SCORE_ONTO_LEADERBOARD",
+          payload: data.leaderBoard,
+        });
+      }
+    })();
+  }, [userId, currentScore, selectedQuiz?._id, leaderBoardDispatch]);
 
   return (
     <>

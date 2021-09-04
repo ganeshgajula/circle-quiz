@@ -23,10 +23,13 @@ const Navbar = () => {
         <Link to="/playedquizzes" className="ml-4 font-semibold">
           Played Quizzes
         </Link>
+        <Link to="/leaderboard" className="ml-4 font-semibold">
+          Leaderboard
+        </Link>
       </div>
-      <div className="flex items-center">
-        <p className="mr-4 text-lg">Hi {userName}</p>
-        {isUserLoggedIn && (
+      {isUserLoggedIn && (
+        <div className="flex items-center">
+          <p className="mr-4 text-lg">Hi {userName}</p>
           <button
             className="font-semibold px-4 py-2 bg-blue-500 text-white rounded-sm text-xl hover:bg-blue-700"
             onClick={() => {
@@ -37,8 +40,8 @@ const Navbar = () => {
           >
             Logout
           </button>
-        )}
-      </div>
+        </div>
+      )}
     </nav>
   );
 };
