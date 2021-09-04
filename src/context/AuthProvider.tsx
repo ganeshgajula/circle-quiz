@@ -3,12 +3,14 @@ import { useReducer } from "react";
 import { authReducer } from "../reducer/authReducer";
 import { createContext, useContext } from "react";
 import { useEffect } from "react";
+import { ServerError } from "../types/serverError.types";
 
 export type AuthState = {
   isUserLoggedIn: boolean;
   userId: string;
   userName: string;
   user: UserData | null;
+  error: ServerError | null;
 };
 
 export type QuizData = {
@@ -32,11 +34,6 @@ export type UserData = {
   quizzesPlayed: QuizAndScoreData[];
 };
 
-export type InitializeUserData = {
-  success: boolean;
-  user: UserData;
-};
-
 const userLoginStatus = JSON.parse(localStorage?.getItem("userInfo")!);
 
 const initialState: AuthState = {
@@ -44,6 +41,7 @@ const initialState: AuthState = {
   userId: "",
   userName: "",
   user: null,
+  error: null,
 };
 
 export type AuthContextType = {

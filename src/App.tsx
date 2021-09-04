@@ -16,8 +16,8 @@ import {
   Signup,
 } from "./pages";
 import { useEffect } from "react";
-import { InitializeUserData, useAuth } from "./context/AuthProvider";
-import axios from "axios";
+import { useAuth } from "./context/AuthProvider";
+import { initializeUser } from "./services/initializeUser";
 
 function App() {
   const {
@@ -28,11 +28,16 @@ function App() {
   useEffect(() => {
     userId &&
       (async () => {
-        const { data } = await axios.get<InitializeUserData>(
-          `http://localhost:4000/users/${userId}`
-        );
+        const response = await initializeUser(userId);
 
-        authDispatch({ type: "INITIALIZE_USER", payload: data.user });
+        if ("user" in response) {
+          return authDispatch({
+            type: "INITIALIZE_USER",
+            payload: response.user,
+          });
+        }
+
+        return authDispatch({ type: "SET_ERROR", payload: response });
       })();
   }, [userId, authDispatch]);
 
