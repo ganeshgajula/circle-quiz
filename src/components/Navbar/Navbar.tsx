@@ -1,15 +1,13 @@
 import React from "react";
 import logo from "../../assets/transparent-logo.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthProvider";
+import { User } from "react-feather";
 
 const Navbar = () => {
   const {
     authData: { isUserLoggedIn, userName },
-    authDispatch,
   } = useAuth();
-
-  const navigate = useNavigate();
 
   return (
     <nav className="flex justify-between items-center max-w-full px-10 py-2 shadow-md">
@@ -29,19 +27,13 @@ const Navbar = () => {
       </div>
       {isUserLoggedIn && (
         <div className="flex items-center">
-          <Link to="/profile" className="mr-4 text-lg">
-            Hi {userName}
-          </Link>
-          <button
-            className="font-semibold px-4 py-2 bg-blue-500 text-white rounded-sm text-xl hover:bg-blue-700"
-            onClick={() => {
-              localStorage?.removeItem("userInfo");
-              authDispatch({ type: "LOGOUT_USER" });
-              navigate("/");
-            }}
+          <Link
+            to="/profile"
+            className="flex flex-col items-center justify-center cursor-pointer"
           >
-            Logout
-          </button>
+            <User size={22} />
+            <span>Hi {userName}</span>
+          </Link>
         </div>
       )}
     </nav>
