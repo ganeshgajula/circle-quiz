@@ -1,5 +1,6 @@
 import { QuizState } from "../context/QuizProvider";
-import { Quizzes } from "../data/quiz.types";
+import { Quizzes } from "../types/quiz.types";
+import { ServerError } from "../types/serverError.types";
 
 type PointsAndQuestions = {
   points: number;
@@ -18,6 +19,8 @@ export type ActionType =
     }
   | { type: "SET_SELECTED_QUIZ"; payload: Quizzes }
   | { type: "SET_SELECTED_OPTIONS"; payload: string }
+  | { type: "SET_STATUS"; payload: string }
+  | { type: "SET_ERROR"; payload: ServerError }
   | { type: "RESET_QUIZ" };
 
 export const quizReducer = (state: QuizState, action: ActionType) => {
@@ -62,6 +65,12 @@ export const quizReducer = (state: QuizState, action: ActionType) => {
         ...state,
         selectedOptions: [...state.selectedOptions, action.payload],
       };
+
+    case "SET_STATUS":
+      return { ...state, status: action.payload };
+
+    case "SET_ERROR":
+      return { ...state, error: action.payload };
 
     default:
       return state;

@@ -1,9 +1,10 @@
-import axios from "axios";
 import { useReducer } from "react";
 import { useEffect } from "react";
 import { createContext, useContext } from "react";
-import { Quizzes } from "../data/quiz.types";
+import { Quizzes } from "../types/quiz.types";
 import { quizReducer } from "../reducer/quizReducer";
+import { getAllQuizzes } from "../services/getAllQuizzes";
+import { ServerError } from "../types/serverError.types";
 
 export type QuizState = {
   quizzes: Quizzes[] | [];
@@ -11,6 +12,8 @@ export type QuizState = {
   currentScore: number;
   selectedQuiz: Quizzes | null;
   selectedOptions: string[];
+  status: string;
+  error: ServerError | null;
 };
 
 const initialState: QuizState = {
@@ -19,11 +22,8 @@ const initialState: QuizState = {
   currentScore: 0,
   selectedQuiz: null,
   selectedOptions: [],
-};
-
-type LoadData = {
-  success: boolean;
-  quizzes: Quizzes[];
+  status: "loading",
+  error: null,
 };
 
 type QuizContextType = {
@@ -41,11 +41,15 @@ export const QuizProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     (async () => {
-      const quizData = await axios.get<LoadData>(
-        "http://localhost:4000/quizzes"
-      );
-      console.log(quizData);
-      dispatch({ type: "LOAD_QUIZZES", payload: quizData.data.quizzes });
+      const response = await getAllQuizzes();
+
+      if ("quizzes" in response) {
+        dispatch({ type: "SET_STATUS", payload: "success" });
+        return dispatch({ type: "LOAD_QUIZZES", payload: response.quizzes });
+      }
+
+      dispatch({ type: "SET_STATUS", payload: "error" });
+      return dispatch({ type: "SET_ERROR", payload: response });
     })();
   }, []);
 
