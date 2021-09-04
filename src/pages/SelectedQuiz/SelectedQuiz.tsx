@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Navbar } from "../../components";
 import { useQuiz } from "../../context/QuizProvider";
-import { Options, Quizzes } from "../../data/quiz.types";
+import { Options, Quizzes } from "../../types/quiz.types";
 
 export const SelectedQuiz = () => {
   const {

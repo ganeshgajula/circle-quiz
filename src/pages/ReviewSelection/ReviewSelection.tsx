@@ -9,7 +9,7 @@ import {
   UserAndQuizScore,
 } from "../../context/LeaderBoardProvider";
 import { useQuiz } from "../../context/QuizProvider";
-import { Options, Questions } from "../../data/quiz.types";
+import { Options, Questions } from "../../types/quiz.types";
 
 export type AppendPlayedQuizzes = {
   success: boolean;

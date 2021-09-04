@@ -1,4 +1,4 @@
-import { QuizzesArray } from "./quiz.types";
+// import { QuizzesArray } from "../types/quiz.types";
 
 const quizzes = {
   quizSet: [
