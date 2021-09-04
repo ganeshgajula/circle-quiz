@@ -25,7 +25,7 @@ const Home = () => {
         {quizzes?.map((quiz: Quizzes) => (
           <Link
             to={`/quiz/${quiz._id}`}
-            key={quiz.quizName}
+            key={quiz._id}
             className="p-4 flex flex-col items-center border-2 cursor-pointer"
           >
             <img src={quiz.coverImage} alt="cover" className="w-80 h-52" />
