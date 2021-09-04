@@ -5,3 +5,4 @@ export { PlayedQuizzes } from "./PlayedQuizzes";
 export { Signup } from "./Signup";
 export { Login } from "./Login";
 export { LeaderBoard } from "./LeaderBoard";
+export { Profile } from "./Profile";

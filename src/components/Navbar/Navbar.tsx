@@ -29,7 +29,9 @@ const Navbar = () => {
       </div>
       {isUserLoggedIn && (
         <div className="flex items-center">
-          <p className="mr-4 text-lg">Hi {userName}</p>
+          <Link to="/profile" className="mr-4 text-lg">
+            Hi {userName}
+          </Link>
           <button
             className="font-semibold px-4 py-2 bg-blue-500 text-white rounded-sm text-xl hover:bg-blue-700"
             onClick={() => {

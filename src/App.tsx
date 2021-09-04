@@ -10,6 +10,7 @@ import {
   LeaderBoard,
   Login,
   PlayedQuizzes,
+  Profile,
   ReviewSelection,
   SelectedQuiz,
   Signup,
@@ -46,6 +47,7 @@ function App() {
         <PrivateRoute path="/review" element={<ReviewSelection />} />
         <PrivateRoute path="/playedquizzes" element={<PlayedQuizzes />} />
         <PrivateRoute path="/leaderboard" element={<LeaderBoard />} />
+        <PrivateRoute path="/profile" element={<Profile />} />
       </Routes>
     </div>
   );

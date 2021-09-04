@@ -17,6 +17,7 @@ export type AuthActionType =
     }
   | { type: "INITIALIZE_USER"; payload: UserData }
   | { type: "SAVE_PLAYED_QUIZ_DATA"; payload: UserData }
+  | { type: "UPDATE_USER_DATA"; payload: UserData }
   | { type: "LOGOUT_USER" };
 
 export const authReducer = (state: AuthState, action: AuthActionType) => {
@@ -49,13 +50,20 @@ export const authReducer = (state: AuthState, action: AuthActionType) => {
         user: action.payload,
       };
 
+    case "UPDATE_USER_DATA":
+      return {
+        ...state,
+        user: action.payload,
+        userName: action.payload.firstname,
+      };
+
     case "LOGOUT_USER":
       return {
         ...state,
         isUserLoggedIn: false,
         userId: "",
         userName: "",
-        userData: null,
+        user: null,
       };
 
     default:
