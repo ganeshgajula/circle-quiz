@@ -16,6 +16,8 @@ export const SelectedQuiz = () => {
   const questionToDisplay = requestedQuiz?.questions[currentQuestionNo];
   const navigate = useNavigate();
 
+  const [isRulesRead, setIsRulesRead] = useState(false);
+
   useEffect(() => {
     if (requestedQuiz) {
       dispatch({ type: "SET_SELECTED_QUIZ", payload: requestedQuiz });
@@ -60,7 +62,35 @@ export const SelectedQuiz = () => {
   return (
     <>
       <Navbar />
-      {requestedQuiz ? (
+      {!isRulesRead && (
+        <div className="flex flex-col justify-center items-center mt-14">
+          <h1 className="font-bold text-4xl py-8">Quiz Rules</h1>
+          <ul className="text-left py-5">
+            <li className="py-1 text-lg">
+              👉 There are total 6 questions in a quiz.
+            </li>
+            <li className="py-1 text-lg">
+              👉 Each correct answer will give you 5 points.
+            </li>
+            <li className="py-1 text-lg">
+              👉 Each wrong answer will deduct 2 points.
+            </li>
+            <li className="py-1 text-lg">
+              👉 You need to select only one correct answer.
+            </li>
+            <li className="py-1 text-lg">
+              👉 High scorers will be featured on the leaderboard.
+            </li>
+          </ul>
+          <button
+            className="bg-blue-500 text-white p-2 rounded-md text-lg font-semibold"
+            onClick={() => setIsRulesRead(true)}
+          >
+            Let's Play
+          </button>
+        </div>
+      )}
+      {isRulesRead && requestedQuiz ? (
         <div className="my-8 m-auto">
           <h1>{requestedQuiz?.quizName}</h1>
           <div className="flex items-center justify-between max-w-xl mx-auto mt-6">
@@ -112,7 +142,7 @@ export const SelectedQuiz = () => {
           </button>
         </div>
       ) : (
-        <div>No quiz found with associated id</div>
+        isRulesRead && <div>No quiz found with associated id</div>
       )}
     </>
   );
