@@ -83,7 +83,7 @@ export const SelectedQuiz = () => {
             </li>
           </ul>
           <button
-            className="bg-blue-500 text-white p-2 rounded-md text-lg font-semibold"
+            className="bg-blue-500 text-white px-3 py-2 rounded-md text-lg font-semibold"
             onClick={() => setIsRulesRead(true)}
           >
             Let's Play
@@ -91,16 +91,18 @@ export const SelectedQuiz = () => {
         </div>
       )}
       {isRulesRead && requestedQuiz ? (
-        <div className="my-8 m-auto">
-          <h1>{requestedQuiz?.quizName}</h1>
-          <div className="flex items-center justify-between max-w-xl mx-auto mt-6">
+        <div className="my-8 max-w-xl mx-auto">
+          <h1 className="text-2xl font-medium">{requestedQuiz?.quizName}</h1>
+          <div className="flex items-center justify-between mt-6 text-lg font-medium">
             <span>
               Question:{currentQuestionNo + 1}/{requestedQuiz.questions.length}
             </span>
             <span>Score:{currentScore}</span>
           </div>
-          <div className="bg-gray-400 my-8 max-w-xl m-auto">
-            <p>{questionToDisplay?.question}</p>
+          <div className="my-8 shadow-lg">
+            <p className="my-3 text-xl font-medium px-4">
+              {questionToDisplay?.question}
+            </p>
             <ul>
               {questionToDisplay?.options.map((option: Options) => (
                 <li
@@ -113,7 +115,7 @@ export const SelectedQuiz = () => {
                     "bg-red-500"
                   } ${
                     selectedOptionId && "pointer-events-none"
-                  } text-white my-2 p-2 cursor-pointer`}
+                  } border border-gray-100 py-3 px-5 cursor-pointer text-lg`}
                   onClick={() => {
                     setSelectedOptionId(option._id);
                     dispatch({
@@ -128,7 +130,9 @@ export const SelectedQuiz = () => {
             </ul>
           </div>
           <button
-            className="border-2 px-4 py-2 bg-blue-300"
+            className={`${
+              !selectedOptionId && "opacity-60"
+            } px-4 py-2 bg-blue-500 text-white font-semibold text-lg rounded-sm`}
             onClick={() => {
               currentQuestionNo < requestedQuiz.questions.length - 1
                 ? questionAndScoreHandler()
