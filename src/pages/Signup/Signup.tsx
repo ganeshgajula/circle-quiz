@@ -1,8 +1,15 @@
-import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "../../components";
 import { toast } from "react-toastify";
+import { userSignup } from "../../services/signup";
+
+export type UserSignupData = {
+  firstname: string;
+  lastname: string;
+  email: string;
+  password: string;
+};
 
 export const Signup = () => {
   const [firstname, setFirstname] = useState("");
@@ -13,32 +20,29 @@ export const Signup = () => {
 
   const allFieldsEntered = firstname && lastname && email && password;
 
+  const userCredentials: UserSignupData = {
+    firstname,
+    lastname,
+    email,
+    password,
+  };
+
   const signupHandler = async (e: React.FormEvent) => {
     e.preventDefault();
-    const { data, status } = await axios.post(
-      "http://localhost:4000/users/signup",
-      {
-        firstname,
-        lastname,
-        email,
-        password,
-      }
-    );
+    const response = await userSignup(userCredentials);
 
-    if (status === 201) {
-      toast.success("Sign up successful, Kindly login!", {
+    if ("user" in response) {
+      navigate("/login", { replace: true });
+      return toast.success("Sign up successful, Kindly login!", {
         position: "bottom-center",
         autoClose: 2000,
       });
-      navigate("/login", { replace: true });
     }
 
-    if ("message" in data) {
-      toast.error(data.message, {
-        position: "bottom-center",
-        autoClose: 3000,
-      });
-    }
+    return toast.error(response.message, {
+      position: "bottom-center",
+      autoClose: 2000,
+    });
   };
 
   return (
