@@ -79,23 +79,18 @@ export const ReviewSelection = () => {
   return (
     <>
       <Navbar />
-      <div className="max-w-xl mx-auto my-4">
-        <h2>Inside review selection</h2>
-        <p>Yay!! Your score is {currentScore}</p>
-        <button
-          className="bg-blue-400 p-2 mt-4"
-          onClick={() => {
-            navigate("/", { replace: true });
-            dispatch({ type: "RESET_QUIZ" });
-          }}
-        >
-          Go to Home
-        </button>
+      <div className="max-w-xl mx-auto my-8">
+        <h1 className="font-semibold text-xl">
+          Yay!! Your total score is {currentScore} 🎊🥳🎉
+        </h1>
         <div className="my-6">
-          <h1>{selectedQuiz?.quizName}</h1>
+          <h2 className="text-lg font-medium">Review you selection</h2>
           {selectedQuiz?.questions.map((question: Questions) => (
-            <div className="my-10 pt-2 bg-gray-100" key={question._id}>
-              <p className="my-2">{question.question}</p>
+            <div
+              className="my-10 pt-2 bg-gray-50 shadow-md rounded-lg"
+              key={question._id}
+            >
+              <p className="p-2 font-semibold text-lg ">{question.question}</p>
               <ul>
                 {question.options.map((option: Options) => (
                   <li
@@ -103,8 +98,8 @@ export const ReviewSelection = () => {
                     className={`${option.isCorrect && "bg-green-400"} ${
                       selectedOptions.includes(option._id) &&
                       !option.isCorrect &&
-                      "bg-red-500"
-                    } py-2 cursor-default`}
+                      "bg-red-400"
+                    } p-2 cursor-default text-lg border border-gray-200`}
                   >
                     {option.text}
                   </li>
@@ -113,6 +108,15 @@ export const ReviewSelection = () => {
             </div>
           ))}
         </div>
+        <button
+          className="bg-blue-500 py-2 px-3 mt-4 text-white font-semibold rounded-md"
+          onClick={() => {
+            navigate("/", { replace: true });
+            dispatch({ type: "RESET_QUIZ" });
+          }}
+        >
+          Go to Home
+        </button>
       </div>
     </>
   );

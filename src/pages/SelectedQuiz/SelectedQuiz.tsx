@@ -63,8 +63,8 @@ export const SelectedQuiz = () => {
     <>
       <Navbar />
       {!isRulesRead && (
-        <div className="flex flex-col justify-center items-center mt-14">
-          <h1 className="font-bold text-4xl py-8">Quiz Rules</h1>
+        <div className="flex flex-col justify-center items-center mt-14 py-8 max-w-xl mx-auto rounded-lg shadow-lg">
+          <h1 className="font-bold text-4xl">Quiz Rules</h1>
           <ul className="text-left py-5">
             <li className="py-1 text-lg">
               👉 There are total 6 questions in a quiz.
@@ -99,8 +99,8 @@ export const SelectedQuiz = () => {
             </span>
             <span>Score:{currentScore}</span>
           </div>
-          <div className="my-8 shadow-lg">
-            <p className="my-3 text-xl font-medium px-4">
+          <div className="my-8 shadow-xl bg-gray-50 rounded-lg">
+            <p className="text-xl font-medium p-4">
               {questionToDisplay?.question}
             </p>
             <ul>
@@ -112,10 +112,10 @@ export const SelectedQuiz = () => {
                   } ${
                     !option.isCorrect &&
                     option._id === selectedOptionId &&
-                    "bg-red-500"
+                    "bg-red-400"
                   } ${
                     selectedOptionId && "pointer-events-none"
-                  } border border-gray-100 py-3 px-5 cursor-pointer text-lg`}
+                  } border border-gray-200  py-3 px-5 cursor-pointer text-lg`}
                   onClick={() => {
                     setSelectedOptionId(option._id);
                     dispatch({
@@ -131,7 +131,7 @@ export const SelectedQuiz = () => {
           </div>
           <button
             className={`${
-              !selectedOptionId && "opacity-60"
+              !selectedOptionId && "opacity-60 cursor-not-allowed"
             } px-4 py-2 bg-blue-500 text-white font-semibold text-lg rounded-sm`}
             onClick={() => {
               currentQuestionNo < requestedQuiz.questions.length - 1
