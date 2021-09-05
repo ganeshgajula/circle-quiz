@@ -1,24 +1,26 @@
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { Navbar } from "../../components";
-import { useAuth, UserData } from "../../context/AuthProvider";
+import { useAuth } from "../../context/AuthProvider";
 import {
   useLeaderBoard,
   UserAndQuizScore,
 } from "../../context/LeaderBoardProvider";
 import { useQuiz } from "../../context/QuizProvider";
+import { addToPlayedQuizzes } from "../../services/addToPlayedQuizzes";
 import { Options, Questions } from "../../types/quiz.types";
-
-export type AppendPlayedQuizzes = {
-  success: boolean;
-  updatedUser: UserData;
-};
 
 export type AddScoreToLeaderBoard = {
   success: boolean;
   leaderBoard: UserAndQuizScore;
+};
+
+export type PlayedQuizData = {
+  quizId: string | undefined;
+  score: number;
 };
 
 export const ReviewSelection = () => {
@@ -36,21 +38,30 @@ export const ReviewSelection = () => {
 
   const { leaderBoardDispatch } = useLeaderBoard();
 
+  const playedQuizData: PlayedQuizData = {
+    quizId: selectedQuiz?._id,
+    score: currentScore,
+  };
+
+  const [playedQuizDetails, setPlayedQuizDetails] =
+    useState<PlayedQuizData>(playedQuizData);
+
+  useEffect(() => {}, [setPlayedQuizDetails]);
+
   useEffect(() => {
     (async () => {
-      const { data, status } = await axios.post<AppendPlayedQuizzes>(
-        `http://localhost:4000/users/${userId}/playedquizzes`,
-        { quizId: selectedQuiz?._id, score: currentScore }
-      );
+      const response = await addToPlayedQuizzes(userId, playedQuizDetails);
 
-      if (status === 201) {
-        authDispatch({
+      if ("updatedUser" in response) {
+        return authDispatch({
           type: "SAVE_PLAYED_QUIZ_DATA",
-          payload: data.updatedUser,
+          payload: response.updatedUser,
         });
       }
+
+      toast.error(response.message);
     })();
-  }, [userId, currentScore, selectedQuiz?._id, authDispatch]);
+  }, [userId, playedQuizDetails, authDispatch]);
 
   useEffect(() => {
     (async () => {
