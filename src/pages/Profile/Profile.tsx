@@ -1,12 +1,13 @@
-import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { Navbar } from "../../components";
-import { useAuth, UserData } from "../../context/AuthProvider";
+import { useAuth } from "../../context/AuthProvider";
+import { updateProfile } from "../../services/updateProfile";
 
-export type UserProfileUpdate = {
-  success: boolean;
-  updatedUser: UserData;
+export type ModifiedUserData = {
+  firstname: string | undefined;
+  lastname: string | undefined;
 };
 
 export const Profile = () => {
@@ -19,16 +20,30 @@ export const Profile = () => {
   const [firstname, setFirstname] = useState(user?.firstname);
   const [lastname, setLastname] = useState(user?.lastname);
 
+  const modifiedUserData: ModifiedUserData = {
+    firstname,
+    lastname,
+  };
+
   const updateProfileHandler = async (e: React.FormEvent) => {
     e.preventDefault();
-    const { data, status } = await axios.post<UserProfileUpdate>(
-      `http://localhost:4000/users/${userId}`,
-      { firstname, lastname }
-    );
+    const response = await updateProfile(userId, modifiedUserData);
 
-    if (status === 201) {
-      authDispatch({ type: "UPDATE_USER_DATA", payload: data.updatedUser });
+    if ("updatedUser" in response) {
+      authDispatch({
+        type: "UPDATE_USER_DATA",
+        payload: response.updatedUser,
+      });
+      return toast.success("Profile details updated successfully.", {
+        position: "bottom-center",
+        autoClose: 2000,
+      });
     }
+
+    return toast.error(response.message, {
+      position: "bottom-center",
+      autoClose: 2000,
+    });
   };
 
   return (
