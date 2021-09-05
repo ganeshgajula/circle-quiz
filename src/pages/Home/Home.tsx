@@ -21,18 +21,18 @@ const Home = () => {
   return (
     <>
       <Navbar />
-      <div className="my-8 max-w-5xl m-auto grid grid-cols-2 gap-8">
+      <div className="my-8 max-w-3xl mx-auto grid grid-cols-2 gap-12">
         {status === "loading" && "Loading.."}
         {status === "success" &&
           quizzes?.map((quiz: Quizzes) => (
             <Link
               to={`/quiz/${quiz._id}`}
               key={quiz._id}
-              className="p-4 flex flex-col items-center border-2 cursor-pointer"
+              className="pb-4 flex flex-col items-center cursor-pointer shadow-lg"
             >
-              <img src={quiz.coverImage} alt="cover" className="w-80 h-52" />
-              <p className="p-2">{quiz.quizName}</p>
-              <p>{quiz.level}</p>
+              <img src={quiz.coverImage} alt="cover" className="w-full h-52" />
+              <p className="my-2 text-lg font-semibold">{quiz.quizName}</p>
+              <p className="font-medium">{quiz.level}</p>
             </Link>
           ))}
         {status === "error" && error && <p>{error.message}</p>}
