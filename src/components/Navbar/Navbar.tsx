@@ -10,7 +10,7 @@ const Navbar = () => {
   } = useAuth();
 
   return (
-    <nav className="flex justify-between items-center max-w-full px-10 py-2 shadow-md">
+    <nav className="flex justify-between items-center max-w-full px-10 py-2 shadow-md sticky top-0 z-10 bg-white">
       <div className="flex items-center">
         <Link to="/">
           <img src={logo} alt="brand-logo" className="h-14 w-44" />
@@ -32,7 +32,7 @@ const Navbar = () => {
             className="flex flex-col items-center justify-center cursor-pointer"
           >
             <User size={22} />
-            <span>Hi {userName}</span>
+            <span className="font-medium">Hi {userName}</span>
           </Link>
         </div>
       )}
