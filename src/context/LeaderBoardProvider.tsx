@@ -1,6 +1,6 @@
-import axios from "axios";
-import React, { useContext, createContext, useReducer, useEffect } from "react";
+import React, { useContext, createContext, useReducer } from "react";
 import { leaderBoardReducer } from "../reducer/leaderBoardReducer";
+import { ServerError } from "../types/serverError.types";
 
 export type QuizInfo = {
   _id: string;
@@ -22,20 +22,19 @@ export type UserAndQuizScore = {
 
 export type LeaderBoardState = {
   leaderBoard: UserAndQuizScore[];
+  status: string;
+  error: ServerError | null;
 };
 
 const initialState: LeaderBoardState = {
   leaderBoard: [],
+  status: "loading",
+  error: null,
 };
 
 type LeaderBoardContextType = {
   leaderBoardData: LeaderBoardState;
   leaderBoardDispatch: React.Dispatch<any>;
-};
-
-type LoadLeaderBoardData = {
-  success: boolean;
-  leaderBoardToppers: UserAndQuizScore[];
 };
 
 export const LeaderBoardContext = createContext<LeaderBoardContextType>({
@@ -45,21 +44,6 @@ export const LeaderBoardContext = createContext<LeaderBoardContextType>({
 
 export const LeaderBoardProvider: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(leaderBoardReducer, initialState);
-
-  useEffect(() => {
-    (async () => {
-      const { data, status } = await axios.get<LoadLeaderBoardData>(
-        "http://localhost:4000/leaderboard"
-      );
-
-      if (status === 200) {
-        dispatch({
-          type: "LOAD_LEADERBOARD",
-          payload: data.leaderBoardToppers,
-        });
-      }
-    })();
-  }, []);
 
   return (
     <LeaderBoardContext.Provider
