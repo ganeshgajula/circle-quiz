@@ -1,22 +1,14 @@
-import axios from "axios";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Navbar } from "../../components";
 import { useAuth } from "../../context/AuthProvider";
-import {
-  useLeaderBoard,
-  UserAndQuizScore,
-} from "../../context/LeaderBoardProvider";
+import { useLeaderBoard } from "../../context/LeaderBoardProvider";
 import { useQuiz } from "../../context/QuizProvider";
+import { addScoreToLeaderBoard } from "../../services/addScoreToLeaderBoard";
 import { addToPlayedQuizzes } from "../../services/addToPlayedQuizzes";
 import { Options, Questions } from "../../types/quiz.types";
-
-export type AddScoreToLeaderBoard = {
-  success: boolean;
-  leaderBoard: UserAndQuizScore;
-};
 
 export type PlayedQuizData = {
   quizId: string | undefined;
@@ -59,25 +51,30 @@ export const ReviewSelection = () => {
         });
       }
 
-      toast.error(response.message);
+      return toast.error(response.message, {
+        position: "bottom-center",
+        autoClose: 2000,
+      });
     })();
   }, [userId, playedQuizDetails, authDispatch]);
 
   useEffect(() => {
     (async () => {
-      const { data, status } = await axios.post<AddScoreToLeaderBoard>(
-        `http://localhost:4000/leaderboard/${userId}`,
-        { quizId: selectedQuiz?._id, score: currentScore }
-      );
+      const response = await addScoreToLeaderBoard(userId, playedQuizDetails);
 
-      if (status === 201) {
-        leaderBoardDispatch({
+      if ("leaderBoard" in response) {
+        return leaderBoardDispatch({
           type: "ADD_SCORE_ONTO_LEADERBOARD",
-          payload: data.leaderBoard,
+          payload: response.leaderBoard,
         });
       }
+
+      return toast.error(response.message, {
+        position: "bottom-center",
+        autoClose: 2000,
+      });
     })();
-  }, [userId, currentScore, selectedQuiz?._id, leaderBoardDispatch]);
+  }, [userId, playedQuizDetails, leaderBoardDispatch]);
 
   return (
     <>
