@@ -1,19 +1,17 @@
-import axios from "axios";
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Navbar } from "../../components";
 import { useAuth } from "../../context/AuthProvider";
-
-export type LoginData = {
-  success: boolean;
-  userId?: string;
-  firstName?: string;
-  message?: string;
-};
+import { userLogin } from "../../services/login";
 
 type LocationState = {
   from: string;
+};
+
+export type LoginCredentials = {
+  email: string;
+  password: string;
 };
 
 export const Login = () => {
@@ -26,44 +24,43 @@ export const Login = () => {
 
   const allFieldsEntered = email && password;
 
+  const loginCredentials: LoginCredentials = {
+    email,
+    password,
+  };
+
   const loginHandler = async (e: React.FormEvent) => {
     e.preventDefault();
-    const { data } = await axios.post<LoginData>(
-      "http://localhost:4000/users/authenticate",
-      {},
-      { headers: { email, password } }
-    );
+    const response = await userLogin(loginCredentials);
 
-    if ("userId" in data) {
-      toast.success("Login Successful", {
-        position: "bottom-center",
-        autoClose: 2000,
+    if ("userId" in response) {
+      authDispatch({
+        type: "SET_USER_CREDENTIALS",
+        payload: {
+          loginStatus: true,
+          userId: response.userId,
+          userName: response.firstName,
+        },
       });
       localStorage?.setItem(
         "userInfo",
         JSON.stringify({
           isUserLoggedIn: true,
-          userId: data.userId,
-          userName: data.firstName,
+          userId: response.userId,
+          userName: response.firstName,
         })
       );
-      authDispatch({
-        type: "SET_USER_CREDENTIALS",
-        payload: {
-          loginStatus: true,
-          userId: data.userId,
-          userName: data.firstName,
-        },
-      });
       navigate(state?.from ? state.from : "/");
+      return toast.success("Login Successful", {
+        position: "bottom-center",
+        autoClose: 2000,
+      });
     }
 
-    if ("message" in data) {
-      toast.error(data.message, {
-        position: "bottom-center",
-        autoClose: 4000,
-      });
-    }
+    return toast.error(response.message, {
+      position: "bottom-center",
+      autoClose: 4000,
+    });
   };
 
   return (
