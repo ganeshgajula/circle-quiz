@@ -13,7 +13,7 @@ export const Profile = () => {
   const {
     authData: { user, userId },
     authDispatch,
-    setupAuthHeader,
+    logoutUser,
   } = useAuth();
 
   const [firstname, setFirstname] = useState(user?.firstname);
@@ -55,8 +55,7 @@ export const Profile = () => {
             className="bg-red-500 text-white font-medium px-2 py-1 rounded-md"
             onClick={() => {
               authDispatch({ type: "LOGOUT_USER" });
-              localStorage?.removeItem("userInfo");
-              setupAuthHeader(null);
+              logoutUser();
             }}
           >
             Logout
