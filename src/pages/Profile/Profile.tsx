@@ -13,7 +13,7 @@ export const Profile = () => {
   const {
     authData: { user, userId },
     authDispatch,
-    loginUser,
+    setupAuthHeader,
   } = useAuth();
 
   const [firstname, setFirstname] = useState(user?.firstname);
@@ -56,7 +56,7 @@ export const Profile = () => {
             onClick={() => {
               authDispatch({ type: "LOGOUT_USER" });
               localStorage?.removeItem("userInfo");
-              loginUser(null);
+              setupAuthHeader(null);
             }}
           >
             Logout

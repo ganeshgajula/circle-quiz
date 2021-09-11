@@ -52,28 +52,24 @@ const initialState: AuthState = {
   error: null,
 };
 
-export type AuthContextType = {
-  authData: AuthState;
-  authDispatch: React.Dispatch<any>;
-  loginUser: (token: string | null) => void;
-};
-
-const loginUser = (token: string | any) => {
-  setupAuthHeaderForServiceCalls(token);
-};
-
-export const AuthContext = createContext<AuthContextType>({
-  authData: initialState,
-  authDispatch: () => null,
-  loginUser,
-});
-
 const setupAuthHeaderForServiceCalls = (token: string | null) => {
   if (token) {
     return (axios.defaults.headers.common["Authorization"] = token);
   }
   delete axios.defaults.headers.common["Authorization"];
 };
+
+export type AuthContextType = {
+  authData: AuthState;
+  authDispatch: React.Dispatch<any>;
+  setupAuthHeader: (token: string | null) => void;
+};
+
+export const AuthContext = createContext<AuthContextType>({
+  authData: initialState,
+  authDispatch: () => null,
+  setupAuthHeader: setupAuthHeaderForServiceCalls,
+});
 
 export const AuthProvider: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
@@ -85,7 +81,7 @@ export const AuthProvider: React.FC = ({ children }) => {
       value={{
         authData: state,
         authDispatch: dispatch,
-        loginUser,
+        setupAuthHeader: setupAuthHeaderForServiceCalls,
       }}
     >
       {children}
