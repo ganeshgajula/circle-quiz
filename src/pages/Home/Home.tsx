@@ -4,6 +4,7 @@ import { useQuiz } from "../../context/QuizProvider";
 import { Quizzes } from "../../types/quiz.types";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
+import { getAllQuizzes } from "../../services/getAllQuizzes";
 
 const Home = () => {
   const {
@@ -12,12 +13,25 @@ const Home = () => {
   } = useQuiz();
 
   useEffect(() => {
+    (async () => {
+      const response = await getAllQuizzes();
+
+      if ("quizzes" in response) {
+        dispatch({ type: "SET_STATUS", payload: "success" });
+        return dispatch({ type: "LOAD_QUIZZES", payload: response.quizzes });
+      }
+
+      dispatch({ type: "SET_STATUS", payload: "error" });
+      return dispatch({ type: "SET_ERROR", payload: response });
+    })();
+  }, [dispatch]);
+
+  useEffect(() => {
     if (currentQuestionNo !== 0) {
       dispatch({ type: "RESET_QUIZ" });
     }
   }, [currentQuestionNo, dispatch]);
 
-  console.log(quizzes);
   return (
     <>
       <Navbar />
