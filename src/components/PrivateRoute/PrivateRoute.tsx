@@ -8,11 +8,10 @@ export type PrivateRouteProps = {
 
 export const PrivateRoute = ({ path, ...props }: PrivateRouteProps) => {
   const {
-    authData: { isUserLoggedIn },
+    authData: { token },
   } = useAuth();
 
-  console.log(isUserLoggedIn);
-  return isUserLoggedIn ? (
+  return token ? (
     <Route path={path} {...props} />
   ) : (
     <Navigate to="/login" state={{ from: path }} replace />

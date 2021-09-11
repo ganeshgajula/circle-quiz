@@ -9,7 +9,7 @@ export type UserProfileUpdate = {
 };
 
 export const updateProfile = async (
-  userId: string,
+  userId: string | null,
   modifiedUserData: ModifiedUserData
 ): Promise<UserProfileUpdate | ServerError> => {
   try {

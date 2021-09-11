@@ -2,10 +2,15 @@ import axios, { AxiosError } from "axios";
 import { LoginCredentials } from "../pages/Login/Login";
 import { ServerError } from "../types/serverError.types";
 
-export type LoginData = {
-  success: boolean;
+export type UserDetails = {
   userId: string;
   firstName: string;
+  token: string;
+};
+
+export type LoginData = {
+  success: boolean;
+  userDetails: UserDetails;
 };
 
 export const userLogin = async (
@@ -13,7 +18,7 @@ export const userLogin = async (
 ): Promise<LoginData | ServerError> => {
   try {
     const response = await axios.post<LoginData>(
-      "http://localhost:4000/users/authenticate",
+      "http://localhost:4000/users/login",
       {},
       { headers: loginCredentials }
     );

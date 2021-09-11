@@ -2,13 +2,12 @@ import React from "react";
 import { useReducer } from "react";
 import { authReducer } from "../reducer/authReducer";
 import { createContext, useContext } from "react";
-import { useEffect } from "react";
 import { ServerError } from "../types/serverError.types";
 
 export type AuthState = {
-  isUserLoggedIn: boolean;
-  userId: string;
-  userName: string;
+  token: string | null;
+  userId: string | null;
+  userName: string | null;
   user: UserData | null;
   error: ServerError | null;
 };
@@ -34,12 +33,20 @@ export type UserData = {
   quizzesPlayed: QuizAndScoreData[];
 };
 
-const userLoginStatus = JSON.parse(localStorage?.getItem("userInfo")!);
+const {
+  token: savedToken,
+  userId: savedUserId,
+  userName: savedUserName,
+} = JSON.parse(localStorage?.getItem("userInfo")!) || {
+  token: null,
+  userId: null,
+  userName: null,
+};
 
 const initialState: AuthState = {
-  isUserLoggedIn: userLoginStatus?.isUserLoggedIn,
-  userId: "",
-  userName: "",
+  token: savedToken,
+  userId: savedUserId,
+  userName: savedUserName,
   user: null,
   error: null,
 };
@@ -56,23 +63,6 @@ export const AuthContext = createContext<AuthContextType>({
 
 export const AuthProvider: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
-
-  useEffect(() => {
-    const loginStatus: AuthState = JSON.parse(
-      localStorage?.getItem("userInfo")!
-    );
-
-    if (loginStatus) {
-      dispatch({
-        type: "SET_USER_CREDENTIALS_FROM_LOCAL_STORAGE",
-        payload: {
-          loginStatus: loginStatus.isUserLoggedIn,
-          userId: loginStatus.userId,
-          userName: loginStatus.userName,
-        },
-      });
-    }
-  }, []);
 
   return (
     <AuthContext.Provider

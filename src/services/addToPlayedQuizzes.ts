@@ -9,7 +9,7 @@ export type AppendPlayedQuizzes = {
 };
 
 export const addToPlayedQuizzes = async (
-  userId: string,
+  userId: string | null,
   playedQuizData: PlayedQuizData
 ): Promise<AppendPlayedQuizzes | ServerError> => {
   try {

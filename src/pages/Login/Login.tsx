@@ -33,21 +33,21 @@ export const Login = () => {
     e.preventDefault();
     const response = await userLogin(loginCredentials);
 
-    if ("userId" in response) {
+    if ("userDetails" in response) {
       authDispatch({
         type: "SET_USER_CREDENTIALS",
         payload: {
-          loginStatus: true,
-          userId: response.userId,
-          userName: response.firstName,
+          userId: response.userDetails.userId,
+          userName: response.userDetails.firstName,
+          token: response.userDetails.token,
         },
       });
       localStorage?.setItem(
         "userInfo",
         JSON.stringify({
-          isUserLoggedIn: true,
-          userId: response.userId,
-          userName: response.firstName,
+          token: response.userDetails.token,
+          userId: response.userDetails.userId,
+          userName: response.userDetails.firstName,
         })
       );
       navigate(state?.from ? state.from : "/");

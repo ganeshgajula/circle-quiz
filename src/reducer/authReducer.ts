@@ -2,18 +2,14 @@ import { AuthState, UserData } from "../context/AuthProvider";
 import { ServerError } from "../types/serverError.types";
 
 export type UserCredentails = {
-  loginStatus: boolean;
   userId: string;
   userName: string;
+  token: string;
 };
 
 export type AuthActionType =
   | {
       type: "SET_USER_CREDENTIALS";
-      payload: UserCredentails;
-    }
-  | {
-      type: "SET_USER_CREDENTIALS_FROM_LOCAL_STORAGE";
       payload: UserCredentails;
     }
   | { type: "INITIALIZE_USER"; payload: UserData }
@@ -27,17 +23,9 @@ export const authReducer = (state: AuthState, action: AuthActionType) => {
     case "SET_USER_CREDENTIALS":
       return {
         ...state,
-        isUserLoggedIn: action.payload.loginStatus,
         userId: action.payload.userId,
         userName: action.payload.userName,
-      };
-
-    case "SET_USER_CREDENTIALS_FROM_LOCAL_STORAGE":
-      return {
-        ...state,
-        isUserLoggedIn: action.payload.loginStatus,
-        userId: action.payload.userId,
-        userName: action.payload.userName,
+        token: action.payload.token,
       };
 
     case "INITIALIZE_USER":
@@ -63,9 +51,9 @@ export const authReducer = (state: AuthState, action: AuthActionType) => {
     case "LOGOUT_USER":
       return {
         ...state,
-        isUserLoggedIn: false,
-        userId: "",
-        userName: "",
+        token: null,
+        userId: null,
+        userName: null,
         user: null,
       };
 

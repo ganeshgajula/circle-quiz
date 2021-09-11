@@ -9,7 +9,7 @@ export type AddScoreToLeaderBoard = {
 };
 
 export const addScoreToLeaderBoard = async (
-  userId: string,
+  userId: string | null,
   playedQuizData: PlayedQuizData
 ): Promise<AddScoreToLeaderBoard | ServerError> => {
   try {

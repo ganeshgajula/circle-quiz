@@ -6,7 +6,7 @@ import { User } from "react-feather";
 
 const Navbar = () => {
   const {
-    authData: { isUserLoggedIn, userName },
+    authData: { token, userName },
   } = useAuth();
 
   return (
@@ -25,7 +25,7 @@ const Navbar = () => {
           Leaderboard
         </Link>
       </div>
-      {isUserLoggedIn && (
+      {token && (
         <div className="flex items-center">
           <Link
             to="/profile"
