@@ -22,6 +22,8 @@ export const Login = () => {
   const location = useLocation();
   const state = location.state as LocationState;
 
+  const { loginUser } = useAuth();
+
   const allFieldsEntered = email && password;
 
   const loginCredentials: LoginCredentials = {
@@ -50,6 +52,7 @@ export const Login = () => {
           userName: response.userDetails.firstName,
         })
       );
+      loginUser(response.userDetails.token);
       navigate(state?.from ? state.from : "/");
       return toast.success("Login Successful", {
         position: "bottom-center",

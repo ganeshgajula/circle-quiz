@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Navbar } from "../../components";
 import { useAuth } from "../../context/AuthProvider";
@@ -14,8 +13,8 @@ export const Profile = () => {
   const {
     authData: { user, userId },
     authDispatch,
+    loginUser,
   } = useAuth();
-  const navigate = useNavigate();
 
   const [firstname, setFirstname] = useState(user?.firstname);
   const [lastname, setLastname] = useState(user?.lastname);
@@ -57,7 +56,7 @@ export const Profile = () => {
             onClick={() => {
               authDispatch({ type: "LOGOUT_USER" });
               localStorage?.removeItem("userInfo");
-              navigate("/");
+              loginUser(null);
             }}
           >
             Logout
