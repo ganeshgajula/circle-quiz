@@ -21,7 +21,7 @@ export const userSignup = async (
 ): Promise<SignupResponse | ServerError> => {
   try {
     const response = await axios.post<SignupResponse>(
-      "http://localhost:4000/users/signup",
+      "https://api-circlequiz.herokuapp.com/users/signup",
       userCredentials
     );
     return response.data;

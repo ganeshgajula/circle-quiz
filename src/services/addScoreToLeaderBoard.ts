@@ -14,7 +14,7 @@ export const addScoreToLeaderBoard = async (
 ): Promise<AddScoreToLeaderBoard | ServerError> => {
   try {
     const response = await axios.post<AddScoreToLeaderBoard>(
-      `http://localhost:4000/leaderboard/${userId}`,
+      `https://api-circlequiz.herokuapp.com/leaderboard/${userId}`,
       playedQuizData
     );
 

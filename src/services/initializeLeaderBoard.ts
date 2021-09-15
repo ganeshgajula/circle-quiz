@@ -10,7 +10,7 @@ type LoadLeaderBoardData = {
 export const initializeLeaderBoard = async () => {
   try {
     const response = await axios.get<LoadLeaderBoardData>(
-      "http://localhost:4000/leaderboard"
+      "https://api-circlequiz.herokuapp.com/leaderboard"
     );
 
     return response.data;

@@ -9,7 +9,9 @@ export type LoadData = {
 
 export const getAllQuizzes = async (): Promise<LoadData | ServerError> => {
   try {
-    const response = await axios.get<LoadData>("http://localhost:4000/quizzes");
+    const response = await axios.get<LoadData>(
+      "https://api-circlequiz.herokuapp.com/quizzes"
+    );
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

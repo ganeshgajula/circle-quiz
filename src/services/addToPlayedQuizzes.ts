@@ -14,7 +14,7 @@ export const addToPlayedQuizzes = async (
 ): Promise<AppendPlayedQuizzes | ServerError> => {
   try {
     const response = await axios.post<AppendPlayedQuizzes>(
-      `http://localhost:4000/users/${userId}/playedquizzes`,
+      `https://api-circlequiz.herokuapp.com/users/${userId}/playedquizzes`,
       playedQuizData
     );
     return response.data;

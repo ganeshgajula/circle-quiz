@@ -14,7 +14,7 @@ export const updateProfile = async (
 ): Promise<UserProfileUpdate | ServerError> => {
   try {
     const response = await axios.post<UserProfileUpdate>(
-      `http://localhost:4000/users/${userId}`,
+      `https://api-circlequiz.herokuapp.com/users/${userId}`,
       modifiedUserData
     );
 

@@ -12,7 +12,7 @@ export const initializeUser = async (
 ): Promise<InitializeUserData | ServerError> => {
   try {
     const response = await axios.get<InitializeUserData>(
-      `http://localhost:4000/users/${userId}`
+      `https://api-circlequiz.herokuapp.com/users/${userId}`
     );
     return response.data;
   } catch (error) {
