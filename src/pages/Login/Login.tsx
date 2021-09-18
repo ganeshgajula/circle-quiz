@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Navbar } from "../../components";
 import { useAuth } from "../../context/AuthProvider";
 import { userLogin } from "../../services/login";
 
@@ -68,8 +67,7 @@ export const Login = () => {
 
   return (
     <div>
-      <Navbar />
-      <h1 className="my-8 text-3xl font-semibold">Login</h1>
+      <h1 className="my-8 text-3xl font-semibold">Log in to Circle Quiz</h1>
       <form onSubmit={loginHandler} className="flex flex-col max-w-xs mx-auto">
         <input
           type="email"

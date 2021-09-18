@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Navbar } from "../../components";
 import { toast } from "react-toastify";
 import { userSignup } from "../../services/signup";
 
@@ -47,8 +46,7 @@ export const Signup = () => {
 
   return (
     <div>
-      <Navbar />
-      <h1 className="my-8 text-3xl font-semibold">Sign up</h1>
+      <h1 className="mt-8 mb-5 text-4xl font-semibold">Sign up</h1>
       <form onSubmit={signupHandler} className="flex flex-col max-w-xs mx-auto">
         <input
           type="text"
