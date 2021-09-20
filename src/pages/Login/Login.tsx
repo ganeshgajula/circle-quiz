@@ -32,6 +32,11 @@ export const Login = () => {
 
   const loginHandler = async (e: React.FormEvent) => {
     e.preventDefault();
+    toast.success("Loggin in...", {
+      position: "bottom-center",
+      autoClose: 2000,
+    });
+
     const response = await userLogin(loginCredentials);
 
     if ("userDetails" in response) {
