@@ -16,6 +16,7 @@ export type LoginCredentials = {
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [guestLogin, setGuestLogin] = useState(false);
   const navigate = useNavigate();
   const { authDispatch } = useAuth();
   const location = useLocation();
@@ -25,10 +26,19 @@ export const Login = () => {
 
   const allFieldsEntered = email && password;
 
-  const loginCredentials: LoginCredentials = {
+  const normalLoginCredentials: LoginCredentials = {
     email,
     password,
   };
+
+  const guestLoginCredentials: LoginCredentials = {
+    email: "test@gmail.com",
+    password: "test",
+  };
+
+  const loginCredentials = !guestLogin
+    ? normalLoginCredentials
+    : guestLoginCredentials;
 
   const loginHandler = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -96,6 +106,13 @@ export const Login = () => {
           disabled={!allFieldsEntered}
         >
           Login
+        </button>
+        <button
+          type="submit"
+          className="mt-6 py-2 rounded-md text-xl bg-blue-400 text-white font-semibold"
+          onClick={() => setGuestLogin(true)}
+        >
+          Login as Guest
         </button>
       </form>
       <p className="mt-4">
