@@ -79,7 +79,7 @@ export const ReviewSelection = () => {
   return (
     <>
       <Navbar />
-      <div className="max-w-xl mx-auto my-8">
+      <div className="w-11/12 sm:max-w-xl mx-auto my-8">
         <h1 className="font-semibold text-xl">
           Yay!! Your total score is {currentScore} 🎊🥳🎉
         </h1>
