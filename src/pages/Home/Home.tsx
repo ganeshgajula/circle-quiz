@@ -35,7 +35,7 @@ const Home = () => {
   return (
     <>
       <Navbar />
-      <div className="my-8 w-11/12 sm:max-w-xl md:max-w-3xl mx-auto grid sm:grid-cols-2 gap-8 md:gap-12">
+      <div className="my-8 max-w-3xl mx-auto grid grid-cols-2 gap-12">
         {status === "loading" && "Loading.."}
         {status === "success" &&
           quizzes?.map((quiz: Quizzes) => (

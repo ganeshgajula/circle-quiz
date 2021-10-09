@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useState } from "react";
+import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Navbar } from "../../components";
 import { useQuiz } from "../../context/QuizProvider";
@@ -61,8 +63,8 @@ export const SelectedQuiz = () => {
     <>
       <Navbar />
       {!isRulesRead && (
-        <div className="flex flex-col justify-center items-center mt-14 py-8 px-4 w-11/12 sm:max-w-xl mx-auto rounded-lg shadow-lg">
-          <h1 className="font-bold text-3xl sm:text-4xl">Quiz Rules</h1>
+        <div className="flex flex-col justify-center items-center mt-14 py-8 max-w-xl mx-auto rounded-lg shadow-lg">
+          <h1 className="font-bold text-4xl">Quiz Rules</h1>
           <ul className="text-left py-5">
             <li className="py-1 text-lg">
               👉 There are total 6 questions in a quiz.
@@ -89,7 +91,7 @@ export const SelectedQuiz = () => {
         </div>
       )}
       {isRulesRead && requestedQuiz ? (
-        <div className="my-8 w-11/12 sm:max-w-xl mx-auto">
+        <div className="my-8 max-w-xl mx-auto">
           <h1 className="text-2xl font-medium">{requestedQuiz?.quizName}</h1>
           <div className="flex items-center justify-between mt-6 text-lg font-medium">
             <span>

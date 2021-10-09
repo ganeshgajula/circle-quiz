@@ -33,7 +33,7 @@ export const LeaderBoard = () => {
   return (
     <>
       <Navbar />
-      <div className="my-8 w-11/12 sm:max-w-3xl mx-auto">
+      <div className="my-8 max-w-3xl mx-auto">
         <h1 className="text-3xl font-semibold">LeaderBoard</h1>
         <div className="flex items-center justify-between mt-8 mb-1 px-2 font-semibold text-lg">
           <span>Sr.No</span>

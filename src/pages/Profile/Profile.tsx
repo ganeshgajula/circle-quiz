@@ -48,11 +48,11 @@ export const Profile = () => {
   return (
     <>
       <Navbar />
-      <div className="w-11/12 sm:max-w-md mx-auto my-6">
-        <span className="block sm:flex items-center justify-between py-2 mb-10">
-          <h1 className="text-2xl sm:text-3xl">Account Details</h1>
+      <div className="max-w-md mx-auto my-6">
+        <span className="flex items-center justify-between py-2 mb-10">
+          <h1 className="text-3xl">Account Details</h1>
           <button
-            className="hidden sm:flex bg-red-500 text-white font-medium px-2 py-1 rounded-md"
+            className="bg-red-500 text-white font-medium px-2 py-1 rounded-md"
             onClick={() => {
               authDispatch({ type: "LOGOUT_USER" });
               logoutUser();
@@ -64,7 +64,7 @@ export const Profile = () => {
         <div className="border border-gray-200 rounded-lg shadow-md p-4">
           <h2 className="font-medium text-xl py-3">Edit Profile</h2>
           <form onSubmit={updateProfileHandler}>
-            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center my-4">
+            <div className="flex justify-between items-center my-4">
               <div className="flex flex-col">
                 <label
                   htmlFor="firstname"
@@ -80,7 +80,7 @@ export const Profile = () => {
                   onChange={(e) => setFirstname(e.target.value)}
                 />
               </div>
-              <div className="mt-4 sm:mt-0 flex flex-col">
+              <div className="flex flex-col">
                 <label
                   htmlFor="lastname"
                   className="text-left pb-1 font-medium text-gray-700"
