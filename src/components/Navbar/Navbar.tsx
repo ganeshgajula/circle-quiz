@@ -17,7 +17,7 @@ const Navbar = () => {
     <>
       <nav className="flex justify-between items-center max-w-full px-3 md:px-10 py-2 shadow-md sticky top-0 z-10 bg-white ">
         <div className="flex items-center gap-6">
-          <span onClick={() => setShowSideDrawer(true)}>
+          <span className="md:hidden" onClick={() => setShowSideDrawer(true)}>
             <MenuIcon />
           </span>
           <Link to="/">
