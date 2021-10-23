@@ -5,3 +5,11 @@
 .modal-bg {
   background-color: rgba(0, 0, 0, 0.4);
 }
+
+.h-screen-60 {
+  height: 60vh;
+}
+
+.h-screen-40 {
+  height: 40vh;
+}
