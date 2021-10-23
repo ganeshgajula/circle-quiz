@@ -5,6 +5,7 @@ import { Quizzes } from "../../types/quiz.types";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { getAllQuizzes } from "../../services/getAllQuizzes";
+import { Spinner } from "../../components/Spinner/Spinner";
 
 const Home = () => {
   const {
@@ -35,8 +36,12 @@ const Home = () => {
   return (
     <>
       <Navbar />
+      {status === "loading" && (
+        <div className="flex items-center justify-center w-full h-screen-60">
+          <Spinner size={60} />
+        </div>
+      )}
       <div className="my-8 w-11/12 sm:max-w-xl md:max-w-3xl mx-auto grid sm:grid-cols-2 gap-8 md:gap-12">
-        {status === "loading" && "Loading.."}
         {status === "success" &&
           quizzes?.map((quiz: Quizzes) => (
             <Link
